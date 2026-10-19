@@ -6,7 +6,7 @@
 <title>Sakshi Kalunge — Portfolio</title>
 <meta name="description" content="Portfolio of Sakshi Kalunge, Computer Engineering student at VJTI, showcasing projects, skills, achievements and education.">
 <meta name="theme-color" content="#f7f5f0">
-<script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")==="dark"?"dark":"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<script>document.documentElement.setAttribute("data-theme","light")</script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -250,7 +250,7 @@
   }
   .info-card:hover::before { transform: scaleY(1); }
   .info-card:hover { border-color: rgba(168,85,247,0.3); transform: translateX(6px); }
-  .info-icon { font-size: 1.5rem; }
+  .info-icon { font-size: 1.35rem; width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border-radius: 10px; color: var(--purple); background: var(--purple-faint); border: 1px solid rgba(124,58,237,.14); font-family: 'JetBrains Mono', monospace; line-height: 1; }
   .info-label { font-size: 0.72rem; color: var(--grey); text-transform: uppercase; letter-spacing: 1.5px; }
   .info-value { font-weight: 600; font-size: 0.95rem; margin-top: 2px; }
 
@@ -324,7 +324,15 @@
   }
 
   /* ── SKILLS ── */
-  .skills-universe { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .skills-universe { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+  .skill-cluster { min-width: 0; min-height: 260px; display:flex; flex-direction:column; padding: 24px 18px; }
+  .skill-cluster .skill-pills { align-content:flex-start; gap:8px; }
+  .cluster-title { line-height:1.45; min-height:3em; overflow-wrap:anywhere; letter-spacing:1.5px; }
+  .skill-pill { padding:6px 11px; font-size:.76rem; white-space:normal; overflow-wrap:anywhere; }
+  /* Keep all five skill groups on one row on desktop; collapse only when the viewport truly needs it. */
+  @media (max-width: 1050px) { .skills-universe { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @media (max-width: 760px) { .skills-universe { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 520px) { .skills-universe { grid-template-columns: 1fr; gap:16px; } .skill-cluster { min-height:0; padding:22px; } .cluster-title { min-height:0; } }
   .skill-cluster {
     background: var(--card); border-radius: 10px;
     border: 1px solid rgba(168,85,247,0.08); padding: 28px;
@@ -466,12 +474,13 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
   /* ── THEME TOGGLE ── */
   .nav-right { display: flex; align-items: center; gap: 28px; }
   #theme-toggle {
-    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 1px;
-    padding: 8px 14px; background: transparent; color: var(--white);
-    border: 1px solid rgba(var(--fg-rgb),0.3); border-radius: 100px; cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; padding: 0; background: var(--purple-faint);
+    color: var(--purple); border: 1px solid rgba(124,58,237,.22);
+    border-radius: 50%; cursor: pointer; transition: border-color .2s, color .2s, background .2s, transform .2s;
   }
-  #theme-toggle:hover { border-color: var(--purple); color: var(--purple); }
+  .theme-icon { display: block; font-family: 'Outfit', sans-serif; font-size: 1.25rem; line-height: 1; }
+  #theme-toggle:hover { border-color: var(--purple); background: var(--purple-glow); transform: rotate(-8deg); }
   #theme-toggle:focus-visible, .nav-links a:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
   @media (max-width: 760px) { .nav-right { gap: 12px; } }
 
@@ -689,6 +698,94 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
   #interactive-grid { opacity:.85; }
   html[data-theme="dark"] #interactive-grid { opacity:.8; }
 
+
+
+  /* ── BEYOND THE CODE: personal interests, with proper card layout and art ── */
+  .beyond-intro {
+    max-width: 760px; color: var(--c-bbb); font-size: 1.05rem;
+    line-height: 1.85; margin: 0 0 34px;
+  }
+  .beyond-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px;
+    align-items: stretch;
+  }
+  .beyond-card {
+    position: relative; min-width: 0; overflow: hidden; isolation: isolate;
+    display: flex; flex-direction: column; align-items: flex-start;
+    height: 100%; padding: 0 25px 26px; border-radius: 14px;
+    background: color-mix(in srgb, var(--card) 88%, transparent);
+    border: 1px solid rgba(124,58,237,.17);
+    box-shadow: 0 14px 34px rgba(45,25,80,.055);
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .beyond-card::after {
+    content: ""; position: absolute; z-index: -1; width: 210px; height: 210px;
+    right: -100px; top: -110px; border-radius: 50%;
+    background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+    pointer-events: none;
+  }
+  .beyond-card:hover { transform: translateY(-7px); border-color: rgba(124,58,237,.4); box-shadow: var(--shadow-md); }
+  .beyond-art {
+    height: 190px; min-height: 190px; flex: 0 0 190px;
+    width: calc(100% + 50px); margin: 0 -25px 23px;
+    position: relative; overflow: hidden; display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(124,58,237,.11), rgba(124,58,237,.025));
+    border-bottom: 1px solid rgba(124,58,237,.12);
+  }
+  .beyond-kicker {
+    font: 400 .68rem/1.5 'JetBrains Mono', monospace; letter-spacing: 1.7px;
+    text-transform: uppercase; color: var(--purple); margin-bottom: 10px;
+  }
+  .beyond-title {
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.18rem;
+    line-height: 1.35; letter-spacing: -.15px; margin-bottom: 12px;
+    color: var(--white); overflow-wrap: anywhere;
+  }
+  .beyond-copy { color: var(--c-bbb); font-size: .93rem; line-height: 1.8; margin-bottom: 0; }
+  .beyond-card > .beyond-copy { flex: 1 0 auto; }
+  /* Keep all three artwork panels identical in size and remove decorative tags. */
+  .beyond-card > .music-art { height: 190px; min-height: 190px; flex: 0 0 190px; width: calc(100% + 50px); margin: 0 -25px 23px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(124,58,237,.12); background: linear-gradient(135deg, rgba(124,58,237,.11), rgba(124,58,237,.025)); }
+  .beyond-card > .beyond-tags { display: none; }
+  /* Mentorship artwork: a gently orbiting group of connected people. */
+  .mentor-art .mentor-orbit { position:absolute; width:125px; height:125px; border:1px solid rgba(124,58,237,.25); border-radius:50%; animation: mentorOrbit 24s linear infinite; }
+  .mentor-art .mentor-orbit::before, .mentor-art .mentor-orbit::after { content:""; position:absolute; width:9px; height:9px; border-radius:50%; background:var(--purple); box-shadow:0 0 15px var(--purple-glow); }
+  .mentor-art .mentor-orbit::before { top:9px; left:22px; }
+  .mentor-art .mentor-orbit::after { right:4px; bottom:31px; width:6px; height:6px; }
+  .mentor-art .mentor-orbit.orbit-b { width:91px; height:91px; border-style:dashed; animation-duration:18s; animation-direction:reverse; }
+  .mentor-people { display:flex; align-items:flex-end; gap:10px; position:relative; z-index:1; }
+  .mentor-person { position:relative; display:block; width:35px; height:42px; border-radius:18px 18px 9px 9px; background:linear-gradient(180deg, rgba(124,58,237,.7), rgba(124,58,237,.18)); border:1px solid rgba(124,58,237,.35); }
+  .mentor-person::before { content:""; position:absolute; width:17px; height:17px; left:8px; top:-19px; border-radius:50%; background:var(--purple); box-shadow:0 0 0 5px var(--purple-faint); }
+  .mentor-person:nth-child(2) { width:43px; height:53px; }
+  .mentor-person:nth-child(2)::before { left:12px; }
+  .mentor-person:nth-child(3) { transform:scale(.85); transform-origin:bottom; }
+  @keyframes mentorOrbit { to { transform:rotate(360deg); } }
+  /* Music artwork: animated equalizer bars, decorative only (not an audio player). */
+  .music-art { gap:7px; display:flex; align-items:center; justify-content:center; height:100%; width:100%; }
+  .music-art::before { content:""; position:absolute; width:132px; height:132px; border:1px solid rgba(124,58,237,.16); border-radius:50%; box-shadow:0 0 0 17px rgba(124,58,237,.035), 0 0 0 34px rgba(124,58,237,.025); }
+  .music-art span { position:relative; z-index:1; width:5px; height:var(--bar); max-height:76px; border-radius:9px; background:linear-gradient(to top, var(--purple-dim), #c4a7ff); transform-origin:center; animation: equalize 1.7s ease-in-out infinite alternate; animation-delay:var(--delay); }
+  @keyframes equalize { from { transform:scaleY(.35); opacity:.65; } to { transform:scaleY(1); opacity:1; } }
+  /* Photography artwork: a camera silhouette with a softly animated lens and viewfinder. */
+  .photo-art { width:100%; height:100%; position:relative; display:grid; place-items:center; }
+  .photo-sky { position:absolute; inset:0; background:radial-gradient(circle at 76% 22%, rgba(196,167,255,.46), transparent 18%), linear-gradient(135deg,rgba(124,58,237,.035),transparent 60%); }
+  .photo-mountain { display:none; }
+  .camera-illustration { position:relative; z-index:1; width:172px; height:112px; border:1.5px solid rgba(124,58,237,.52); border-radius:18px; background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(196,167,255,.2)); box-shadow:0 18px 35px rgba(88,48,160,.12), inset 0 1px rgba(255,255,255,.8); transform:rotate(-3deg); animation:cameraFloat 5s ease-in-out infinite; }
+  .camera-illustration::before { content:""; position:absolute; width:58px; height:15px; top:-13px; left:25px; border:1.5px solid rgba(124,58,237,.45); border-bottom:0; border-radius:8px 8px 0 0; background:rgba(196,167,255,.22); }
+  .camera-lens { position:absolute; width:62px; height:62px; border-radius:50%; left:54px; top:24px; border:5px solid rgba(124,58,237,.48); background:radial-gradient(circle at 35% 30%,#fff 0%,#d9c5ff 24%,#8b5cf6 58%,#3b1b75 100%); box-shadow:0 0 0 8px rgba(124,58,237,.10), inset 0 0 0 2px rgba(255,255,255,.55); }
+  .camera-lens::after { content:""; position:absolute; width:15px; height:15px; border-radius:50%; background:rgba(255,255,255,.8); top:8px; left:10px; filter:blur(1px); }
+  .camera-flash { position:absolute; width:18px; height:13px; right:18px; top:13px; border-radius:4px; background:rgba(124,58,237,.28); border:1px solid rgba(124,58,237,.25); }
+  .photo-frame { position:absolute; inset:22px 28px; border:1px solid rgba(124,58,237,.18); border-radius:10px; }
+  .photo-frame::before, .photo-frame::after { content:""; position:absolute; width:18px; height:18px; border-color:var(--purple); border-style:solid; }
+  .photo-frame::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
+  .photo-frame::after { right:-1px; bottom:-1px; border-width:0 2px 2px 0; }
+  @keyframes cameraFloat { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-6px) rotate(-1deg)} }
+  html[data-theme="dark"] .camera-illustration { background:linear-gradient(145deg,rgba(52,32,79,.92),rgba(33,21,47,.72)); }
+  html[data-theme="dark"] .camera-lens { background:radial-gradient(circle at 35% 30%,#d9c5ff 0%,#8b5cf6 40%,#21152f 100%); }
+  html[data-theme="dark"] .beyond-card { background:rgba(37,45,38,.82); border-color:rgba(196,167,255,.16); }
+  html[data-theme="dark"] .beyond-art { background:linear-gradient(135deg,rgba(196,167,255,.12),rgba(196,167,255,.025)); border-color:rgba(196,167,255,.12); }
+  @media(max-width:1000px) { .beyond-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .beyond-card--mentor { grid-column:auto; } }
+  @media(max-width:640px) { .beyond-grid { grid-template-columns:1fr; gap:16px; } .beyond-card--mentor { grid-column:auto; } .beyond-art, .beyond-card > .music-art { height:170px; min-height:170px; flex-basis:170px; } .beyond-card { padding-left:20px; padding-right:20px; } .beyond-art, .beyond-card > .music-art { width:calc(100% + 40px); margin-left:-20px; margin-right:-20px; } .beyond-title { font-size:1.2rem; } }
+  @media(prefers-reduced-motion:reduce) { .mentor-art .mentor-orbit,.music-art span,.camera-illustration { animation:none !important; } .beyond-card:hover { transform:none; } }
+
 </style>
 </head>
 <body>
@@ -709,9 +806,10 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
     <li><a href="#skills">Skills</a></li>
     <li><a href="#achievements">Achievements</a></li>
     <li><a href="#education">Education</a></li>
+    <li><a href="#beyond">Beyond</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">Dark</button>
+  <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme"><span class="theme-icon" aria-hidden="true">☾</span></button>
   </div>
 </nav>
 
@@ -741,11 +839,11 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
         <div class="stat-label">CGPA</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num" data-target="3" data-suffix="+">0</div>
+        <div class="stat-num static-stat">3+</div>
         <div class="stat-label">Projects Built</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num" data-target="4" data-suffix="+">0</div>
+        <div class="stat-num static-stat">4+</div>
         <div class="stat-label">Achievements</div>
       </div>
     </div>
@@ -785,11 +883,11 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
       <div class="about-highlight">"Code. Create. Innovate." — not a tagline, a way of working.</div>
     </div>
     <div class="info-cards reveal-right">
-      <div class="info-card"><div class="info-icon">🎓</div><div><div class="info-label">Institute</div><div class="info-value">VJTI, Matunga — Mumbai</div></div></div>
-      <div class="info-card"><div class="info-icon">📚</div><div><div class="info-label">Degree</div><div class="info-value">B.Tech Computer Engineering</div></div></div>
-      <div class="info-card"><div class="info-icon">⭐</div><div><div class="info-label">CGPA</div><div class="info-value">9.25 / 10.0</div></div></div>
-      <div class="info-card"><div class="info-icon">📍</div><div><div class="info-label">Location</div><div class="info-value">Mumbai, Maharashtra, India</div></div></div>
-      <div class="info-card"><div class="info-icon">📬</div><div><div class="info-label">Email</div><div class="info-value">sakshikalunge07@gmail.com</div></div></div>
+      <div class="info-card"><div class="info-icon" aria-hidden="true">⌘</div><div><div class="info-label">Institute</div><div class="info-value">VJTI, Matunga — Mumbai</div></div></div>
+      <div class="info-card"><div class="info-icon" aria-hidden="true">▤</div><div><div class="info-label">Degree</div><div class="info-value">B.Tech Computer Engineering</div></div></div>
+      <div class="info-card"><div class="info-icon" aria-hidden="true">✦</div><div><div class="info-label">CGPA</div><div class="info-value">9.25 / 10.0</div></div></div>
+      <div class="info-card"><div class="info-icon" aria-hidden="true">⌖</div><div><div class="info-label">Location</div><div class="info-value">Mumbai, Maharashtra, India</div></div></div>
+      <div class="info-card"><div class="info-icon" aria-hidden="true">✉</div><div><div class="info-label">Email</div><div class="info-value">sakshikalunge07@gmail.com</div></div></div>
     </div>
   </div>
 </section>
@@ -936,6 +1034,8 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
   </div>
 </section>
 
+
+
 <!-- ══════════════ EDUCATION ══════════════ -->
 <section id="education">
   <div class="section-label">05 — Academic Journey</div>
@@ -971,9 +1071,46 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
   </div>
 </section>
 
+<!-- ══════════════ BEYOND CODE ══════════════ -->
+<section id="beyond">
+  <div class="section-label">06 — Life Beyond Engineering</div>
+  <h2 class="section-title reveal">Beyond the Code</h2>
+  <div class="section-divider reveal"></div>
+  <p class="beyond-intro reveal">Technology is a big part of what I do, but it isn't all of who I am. I value the people I learn with, the music I return to, and the small details worth capturing along the way.</p>
+
+  <div class="beyond-grid">
+    <article class="beyond-card beyond-card--mentor reveal">
+      <div class="beyond-art mentor-art" aria-hidden="true">
+        <div class="mentor-orbit"></div><div class="mentor-orbit orbit-b"></div>
+        <div class="mentor-people"><span class="mentor-person"></span><span class="mentor-person"></span><span class="mentor-person"></span></div>
+      </div>
+      <div class="beyond-kicker">Community · Mentorship</div>
+      <h3 class="beyond-title">Growing Together at Project X</h3>
+      <p class="beyond-copy">As a mentor at Project X, a student-run club at VJTI, I got to support fellow students as they explored ideas and worked through technical challenges. For me, mentorship is about sharing what I know, asking better questions, and helping someone find the confidence to build something of their own.</p>
+    </article>
+
+    <article class="beyond-card reveal" style="transition-delay:.08s">
+      <div class="music-art" aria-hidden="true">
+        <span style="--bar:20px;--delay:-.2s"></span><span style="--bar:36px;--delay:-.8s"></span><span style="--bar:52px;--delay:-.4s"></span><span style="--bar:29px;--delay:-1.1s"></span><span style="--bar:64px;--delay:-.6s"></span><span style="--bar:39px;--delay:-.1s"></span><span style="--bar:23px;--delay:-.9s"></span><span style="--bar:48px;--delay:-.3s"></span><span style="--bar:32px;--delay:-1.3s"></span><span style="--bar:56px;--delay:-.7s"></span><span style="--bar:24px;--delay:-.5s"></span><span style="--bar:42px;--delay:-1s"></span>
+      </div>
+      <div class="beyond-kicker">Reset · Recharge</div>
+      <h3 class="beyond-title">A Soundtrack for Everything</h3>
+      <p class="beyond-copy">Outside deadlines and debugging, music is one of my favourite ways to unwind, reset, and find a little inspiration. Sometimes the best break is simply pressing play.</p>
+    </article>
+
+    <article class="beyond-card reveal" style="transition-delay:.16s">
+      <div class="beyond-art photo-art" aria-hidden="true"><div class="photo-sky"></div><div class="photo-frame"></div><div class="camera-illustration"><span class="camera-flash"></span><span class="camera-lens"></span></div></div>
+      <div class="beyond-kicker">Observe · Capture</div>
+      <h3 class="beyond-title">Finding Frames in the Everyday</h3>
+      <p class="beyond-copy">Photography lets me slow down and notice the details that can get lost in a busy day. I enjoy looking at familiar things from a different perspective and holding on to moments worth remembering.</p>
+    </article>
+  </div>
+</section>
+
+
 <!-- ══════════════ CONTACT ══════════════ -->
 <section id="contact">
-  <div class="section-label" style="text-align:center;margin-bottom:16px;">06 — Let's Connect</div>
+  <div class="section-label" style="text-align:center;margin-bottom:16px;">07 — Let's Connect</div>
   <h2 class="contact-title reveal">Get In Touch</h2>
   <p class="contact-sub reveal">Open to internships, collaborations, and exciting opportunities.</p>
   <div class="contact-links reveal">
@@ -991,9 +1128,11 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
   const themeBtn = document.getElementById('theme-toggle');
   function paintToggle() {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    themeBtn.textContent = dark ? 'Light' : 'Dark';
+    const icon = themeBtn.querySelector('.theme-icon');
+    icon.textContent = dark ? '☼' : '☾';
     themeBtn.setAttribute('aria-pressed', String(dark));
     themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.setAttribute('title', dark ? 'Switch to light theme' : 'Switch to dark theme');
   }
   themeBtn.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
@@ -1028,20 +1167,31 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
 
   /* Count-up animation, bypassed for reduced-motion preferences. */
   function animCount(el) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      el.textContent = el.dataset.final || ((el.dataset.target || '') + (el.dataset.suffix || ''));
-      return;
-    }
-    const target = parseInt(el.dataset.target, 10);
+    const target = Number.parseFloat(el.dataset.target || '0');
     const suffix = el.dataset.suffix || '';
     const final = el.dataset.final || null;
-    let cur = 0;
-    const step = Math.max(1, Math.floor(target / 60));
-    const timer = setInterval(() => {
-      cur = Math.min(cur + step, target);
-      el.textContent = cur + suffix;
-      if (cur >= target) { clearInterval(timer); el.textContent = final || (target + suffix); }
-    }, 30);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = final || (target + suffix);
+      return;
+    }
+    // A fixed-duration count-up gives small totals (3+ and 4+) visible intermediate steps too.
+    const duration = 1500;
+    const start = performance.now();
+    let lastValue = -1;
+    el.textContent = '0';
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      let current = Math.floor(target * eased);
+      if (progress >= 1) current = target;
+      if (current !== lastValue) {
+        el.textContent = current + suffix;
+        lastValue = current;
+      }
+      if (progress < 1) requestAnimationFrame(frame);
+      else el.textContent = final || (target + suffix);
+    }
+    requestAnimationFrame(frame);
   }
   const stats = document.querySelector('.hero-stats');
   if (stats && 'IntersectionObserver' in window) {
@@ -1049,9 +1199,9 @@ body, section, nav, footer { transition: background-color 0.3s, color 0.3s; }
     new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && !counted) {
         counted = true;
-        document.querySelectorAll('.stat-num').forEach(animCount);
+        document.querySelectorAll('.stat-num:not(.static-stat)').forEach(animCount);
       }
-    }, { threshold: 0.5 }).observe(stats);
+    }, { threshold: 0.25 }).observe(stats);
   }
 
   /* Scroll reveal */
